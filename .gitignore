@@ -26,3 +26,8 @@ dist-ssr
 # Environment
 .env
 
+# Terraform
+.terraform
+*.tfvars
+*.tfstate
+*.tfstate.*
