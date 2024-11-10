@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:build": "docker build -t human_powered_backend:dev .",
+    "docker:run": "docker run --name human_powered_backend -d -p 8080:8080 human_powered_backend:dev",
+    "docker:stop": "docker stop human_powered_backend && docker rm human_powered_backend",
+    "docker:remove-image": "docker rmi human_powered_backend:dev"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
