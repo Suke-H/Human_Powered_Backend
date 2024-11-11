@@ -8,10 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "docker:build": "docker build -t human_powered_backend:dev .",
-    "docker:run": "docker run --name human_powered_backend -d -p 8080:8080 human_powered_backend:dev",
-    "docker:stop": "docker stop human_powered_backend && docker rm human_powered_backend",
-    "docker:remove-image": "docker rmi human_powered_backend:dev"
+    "docker:build": "docker build -t human-powered-backend:dev .",
+    "docker:run": "docker run --name human-powered-backend -d -p 8080:8080 human-powered-backend:dev",
+    "docker:stop": "docker stop human-powered-backend && docker rm human-powered-backend",
+    "docker:remove-image": "docker rmi human-powered-backend:dev"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",

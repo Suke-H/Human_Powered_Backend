@@ -14,7 +14,7 @@ provider "google" {
 
 # Terraformを実行するサービスアカウントを作成
 resource "google_service_account" "terraform_sa" {
-  account_id   = "${var.project_id}-terraform-sa"
+  account_id   = "${var.terraform_sa_name}"
   display_name = "Terraform Service Account"
   project      = var.project_id
 }

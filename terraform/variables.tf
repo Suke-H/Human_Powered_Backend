@@ -14,17 +14,18 @@ variable "github_repo" {
   description = "GitHubリポジトリ (例: user/repo)"
 }
 
+variable "terraform_sa_name" {
+  type        = string
+  description = "Terraform用サービスアカウントの名前"
+  default     = "terraform-sa"
+}
+
 variable "github_actions" {
   type = object({
     service_account_name            = string
     workload_identity_pool_name     = string
     workload_identity_provider_name = string
   })
-  default = {
-    service_account_name            = "${var.project_id}-github-actions-sa"
-    workload_identity_pool_name     = "${var.project_id}-github-actions-pool"
-    workload_identity_provider_name = "${var.project_id}-github-provider"
-  }
   description = "GitHub Actions関連の設定"
 }
 
