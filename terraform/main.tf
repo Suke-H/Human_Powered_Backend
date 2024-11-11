@@ -109,9 +109,9 @@ resource "google_service_account_iam_member" "workload_identity_user" {
 # Secretsに必要な情報を出力
 output "github_actions" {
   value = {
-    project_id     = var.project_id
-    wif_provider   = "projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github_pool.workload_identity_pool_id}/providers/${google_iam_workload_identity_pool_provider.github_provider.workload_identity_pool_provider_id}"
-    sa_email       = google_service_account.github_actions.email
+    PROJECT_ID     = var.project_id
+    WIF_PROVIDER   = "projects/${data.google_project.project.number}/locations/global/workloadIdentityPools/${google_iam_workload_identity_pool.github_pool.workload_identity_pool_id}/providers/${google_iam_workload_identity_pool_provider.github_provider.workload_identity_pool_provider_id}"
+    SA_EMAIL       = google_service_account.github_actions.email
   }
   description = "GitHub Actions用の設定情報"
 }
