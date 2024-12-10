@@ -37,7 +37,7 @@ const AuthButton = () => {
     checkAuthStatus();
 
     // Supabaseの認証イベントリスナーを設定
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         setIsAuthenticated(true);
         setUserName(session.user.user_metadata.full_name || session.user.email);
