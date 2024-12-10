@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { User } from '../types';
 
 const Database = ({ data }: { data: User[] }) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback  } from "react";
 import { Folder, Message, User, CustomFile } from "./types";
 import { initialDatabase } from "./data/initialDatabase";
 import { initialFileSystem } from "./data/initialFileSystem";
@@ -16,16 +16,16 @@ const App = () => {
     (CustomFile & { path: string[] }) | null
   >(null);
 
-  const generateSampleCredentials = () => {
+  const generateSampleCredentials = useCallback(() => {
     const randomUser = database[Math.floor(Math.random() * database.length)];
     const useCorrectPassword = Math.random() < 0.5;
     const password = useCorrectPassword
       ? randomUser.password
       : `wrong${randomUser.password}`;
     return { userId: randomUser.userId, password };
-  };
+  }, [database]);
 
-  const sendSampleCredentials = () => {
+  const sendSampleCredentials = useCallback(() => {
     const { userId, password } = generateSampleCredentials();
     const message: Message = {
       id: Date.now(),
@@ -37,9 +37,9 @@ const App = () => {
       password,
     };
     setMessages((prev) => [...prev, message]);
-  };
-
-  const sendSampleFileRequest = () => {
+  }, [generateSampleCredentials]);
+  
+  const sendSampleFileRequest = useCallback(() => {
     const folders = ["desktop", "documents", "images"];
     const randomFolder = folders[Math.floor(Math.random() * folders.length)];
     const message: Message = {
@@ -50,9 +50,9 @@ const App = () => {
       type: "file_request",
     };
     setMessages((prev) => [...prev, message]);
-  };
-
-  const sendSampleFileSave = () => {
+  }, []);
+  
+  const sendSampleFileSave = useCallback(() => {
     const fileName = `file_${Date.now()}.txt`;
     const message: Message = {
       id: Date.now(),
@@ -63,24 +63,30 @@ const App = () => {
       fileName,
     };
     setMessages((prev) => [...prev, message]);
-  };
+  }, []);
 
-  const performRandomOperation = () => {
-    const operations = [
-      sendSampleCredentials,
-      sendSampleFileRequest,
-      sendSampleFileSave,
-    ];
-    const randomOperation =
-      operations[Math.floor(Math.random() * operations.length)];
+  const performRandomOperation = useCallback(() => {
+    const operations = [sendSampleCredentials, sendSampleFileRequest, sendSampleFileSave];
+    const randomOperation = operations[Math.floor(Math.random() * operations.length)];
     randomOperation();
-  };
+  }, [sendSampleCredentials, sendSampleFileRequest, sendSampleFileSave]);
+
+  // const performRandomOperation = () => {
+  //   const operations = [
+  //     sendSampleCredentials,
+  //     sendSampleFileRequest,
+  //     sendSampleFileSave,
+  //   ];
+  //   const randomOperation =
+  //     operations[Math.floor(Math.random() * operations.length)];
+  //   randomOperation();
+  // };
 
   useEffect(() => {
     performRandomOperation();
     const interval = setInterval(performRandomOperation, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [performRandomOperation]);
 
   const validateUser = (userId: string, password: string) => {
     const user = database.find((u) => u.userId === userId);
@@ -117,7 +123,7 @@ const App = () => {
   };
 
   const handleFileDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
+    _e: React.DragEvent<HTMLDivElement>,
     file: CustomFile,
     path: string[]
   ) => {
